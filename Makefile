@@ -4,17 +4,21 @@ else
 TARGET=program
 endif
 
-SRC=$(wildcard *.cpp)
-OBJ=$(SRC:.cpp=.o)
-CC=g++
+LIBPATH=lib
+OBJPATH=obj
+MAIN=main.c
+
+SRC=$(wildcard *.c)
+OBJ=$(SRC:.c=.o)
+CC=gcc
 
 all: $(TARGET) clear
 
 $(TARGET): $(OBJ)
-	$(CC) $^ -o $@
+	$(CC) $(MAIN) $(OBJPATH)/$^ -o $@
 
-%.o: %.cpp
-	$(CC) -c $< -o $@
+%.o: %.c
+	$(CC) -c $(LIBPATH)/$< -o $(OBJPATH)/$@
 
 ifeq ($(OS), Windows_NT)
 clear:
