@@ -13,7 +13,7 @@ MAINF=$(FRTPATH)/findsubstring.f90
 
 SRC=$(wildcard $(LIBPATH)/*.c)
 OBJ=$(SRC:$(LIBPATH)/%.c=$(OBJPATH)/%.o)
-OBJF=$(MAINF:$(FRTPATH)/%.f90=$(FRTPATH)/%.o)
+OBJF=$(MAINF:$(FRTPATH)/%.f90=$(OBJPATH)/%.o)
 CC=gcc
 GF=gfortran
 
@@ -22,14 +22,14 @@ all: $(TARGET) clear
 
 # compila os objetos do C com o main.c e o objeto do fortran
 $(TARGET): $(OBJF) $(OBJ)
-	$(CC) $(MAIN) $^ -o $@
+	$(CC) $(MAIN) $(OBJF) $(OBJ) -o $@ -lgfortran
 
 # gera o objeto do fortran
 $(OBJF): $(MAINF)
-	$(GF) $^ -o $@
+	$(GF) -c $^ -o $@
 
 # gera os objetos do c
-%.o: %.c
+$(OBJ): $(SRC)
 	$(CC) -c $< -o $@
 
 # exclui os objetos
