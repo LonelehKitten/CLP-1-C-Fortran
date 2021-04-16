@@ -7,7 +7,7 @@
 //#include <limits.h>
 
 void init (char *);
-void read (FILE *);
+int read (FILE *);
 
 int getNextLine (FILE *, char **, int *);
 
