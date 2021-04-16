@@ -43,8 +43,6 @@ int read (FILE * file) {
 
     // flag de EOF
     int isEof = 0;
-    // flag de verificação da linha 1
-    int flag = 0;
     
     // lê a primeira string
     fscanf(file, " %s\n", line_1);
@@ -59,9 +57,9 @@ int read (FILE * file) {
         return -1;
     
     // verifica se a primeira linha está formatada corretamente
-    for (int i = 0; i < len_line_1; i++) if (line_1[i] >= '0' && line_1[i] <= '9' || line_1[i] >= 'A' && line_1[i] <= 'z') flag = 1;
-    if (flag == 1 || len_line_1 > 20)
-        return -2;
+    for (int i = 0; i < len_line_1; i++)
+        if (len_line_1 > 20 || (line_1[i] < '0' && line_1[i] > '9' && line_1[i] < 'A' && line_1[i] > 'z'))
+            return -2;
 
     do {
         // pega a próxima linha do arquivo e retorna se chegou ou não ao fim dele
