@@ -48,7 +48,7 @@ void read (FILE * file) {
     fscanf(file, " %s\n", line_1);
 
     // verifica se o arquivo já chegou no final, ou seja, se possui apenas uma linha
-    if (feof(file)) isEof = 1;
+    if (feof(file)) isEof = EOF;
 
     // parâmetros para os tamanhos das strings a ser passadas para as funções seguintes
     int len_line_1, len_line_2;
