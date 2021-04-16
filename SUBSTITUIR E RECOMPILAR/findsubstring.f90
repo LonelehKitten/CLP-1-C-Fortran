@@ -1,6 +1,6 @@
 subroutine findsubstring (lineToSearch, line, lineToSearch_length, line_length)
-    character (len=65535) line
-    character (len=20) lineToSearch
+    character line
+    character lineToSearch
     integer lineToSearch_length, line_length
     integer i, deslocator
     integer count

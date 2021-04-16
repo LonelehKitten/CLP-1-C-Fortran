@@ -1,11 +1,12 @@
 subroutine findsubstring (lineToSearch, line, lineToSearch_length, line_length)
-    character (len=256) line
-    character (len=20) lineToSearch
+    character line
+    character lineToSearch
     integer lineToSearch_length, line_length
     integer i, deslocator
     integer count
     common/args/ count
     deslocator = 1
+    print *, lineToSearch(:lineToSearch_length)
     print *, line(deslocator:line_length)
 
     i = index(line(deslocator:line_length),lineToSearch(:lineToSearch_length))        ! Procura se lineToSearch é uma substring de line, se não for, i recebe 0

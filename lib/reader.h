@@ -16,6 +16,6 @@ extern struct {
 } args_;
 
 //extern void findsubstring_(char [20], char [INT_MAX]);
-extern void findsubstring_(char [], char [], int *lineToSearch_length, int *line_length);
+extern void findsubstring_(char *, char *, int *lineToSearch_length, int *line_length);
 
 #endif /* READER_H */
