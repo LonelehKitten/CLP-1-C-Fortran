@@ -35,10 +35,10 @@ $(OBJ): $(SRC)
 # exclui os objetos
 ifeq ($(OS), Windows_NT)
 clear:
-	-@del /f /a $(OBJPATH)/*.o
+	-@del /f /a $(OBJ)
 	-@del /f /a $(OBJF)
 else
 clear:
-	-@rm -rvf $(OBJPATH)/*.o
+	-@rm -rvf $(OBJ)
 	-@rm -rvf $(OBJF)
 endif

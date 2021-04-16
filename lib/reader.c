@@ -39,7 +39,7 @@ int read (FILE * file) {
 
     // string a ser encontrada e
     // string a ser vasculhada respectivamente
-    char * line_1 = (char *) malloc(20), * line_2;
+    unsigned char * line_1 = (unsigned char *) malloc(20), * line_2;
 
     // flag de EOF
     int isEof = 0;
@@ -81,15 +81,15 @@ int read (FILE * file) {
  * 
  * @return EOF caso tenha chegado no fim do arquivo ou 0 caso contrário
 */
-int getNextLine(FILE * file, char ** sp, int * length) {
+int getNextLine(FILE * file, unsigned char ** sp, int * length) {
 
     // linha retirada do arquivo
-    char * line = (char *) malloc(sizeof(char));
+    unsigned char * line = (unsigned char *) malloc(sizeof(unsigned char));
     *line = '\0';
     // tamanho da linha que no inicio será considerada como se fosse 0
     *length = 0;
     // caractere retirado do arquivo que vai pra line
-    char c;
+    unsigned char c;
     do {
 
         // le caractere da linha do arquivo
@@ -100,7 +100,7 @@ int getNextLine(FILE * file, char ** sp, int * length) {
         // incrementa o tamanho de line
         (*length)++;
         // aumenta o tamanho de line caso a linha tenha mais de 1 caractere
-        if((*length) > 1) line = (char *) realloc(line, (*length)*sizeof(char));
+        if((*length) > 1) line = (unsigned char *) realloc(line, (*length)*sizeof(unsigned char));
         // concatena o novo caractere à line
         line[(*length)-1] = c;
 
