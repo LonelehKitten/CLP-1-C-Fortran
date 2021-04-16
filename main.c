@@ -22,6 +22,7 @@ int main (int argc, char ** argv) {
     // Chama o leitor
     init(argv[1]);
 
+    getc(stdin);
     return 0;
 }
 

@@ -40,5 +40,5 @@ clear:
 else
 clear:
 	-@rm -rvf $(OBJPATH)/*.o
-	-@rm -rvf $(OBJf)
+	-@rm -rvf $(OBJF)
 endif

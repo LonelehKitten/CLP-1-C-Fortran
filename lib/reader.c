@@ -15,9 +15,13 @@ void init (char * filename) {
     int * result = (int *) malloc(sizeof(int));     
     *result = 0;                                    
     
+    // inicializa o contador
+    args_.count = 0;
+
     // chama a função de varredura do arquivo
     // passando um ponteiro para o arquivo e para o contador
-    read(file);
+    // apenas se o arquivo não está vazio
+    if (!feof(file)) read(file);
 
     fclose(file);
 
@@ -37,29 +41,34 @@ void read (FILE * file) {
     // string a ser vasculhada respectivamente
     char * line_1 = (char *) malloc(20), * line_2;
 
+    // flag de EOF
+    int isEof = 0;
+    
     // lê a primeira string
     fscanf(file, " %s\n", line_1);
 
-    // flag de EOF
-    int isEof = 0;
+    // verifica se o arquivo já chegou no final, ou seja, se possui apenas uma linha
+    if (feof(file)) isEof = 1;
 
-    args_.count = 0;
+    // parâmetros para os tamanhos das strings a ser passadas para as funções seguintes
     int len_line_1, len_line_2;
+    // tamanho da string a ser encontrada
     len_line_1 = (int) strlen(line_1);
-    do {
+
+    // entra em loop enquanto ainda não chegou no fim do arquivo
+    while(isEof != EOF) {
         // pega a próxima linha do arquivo e retorna se chegou ou não ao fim dele
         isEof = getNextLine(file, &line_2, &len_line_2);
-        // chama o programa em Fortran passando a primeira linha em par com as demais e o contador para ser incrementado
-
+        // chama o programa em Fortran passando a primeira linha em par com a linha da iteração atual, junto do tamanho de cada
         findsubstring_(line_1, line_2, &len_line_1, &len_line_2);
         // limpa line_2 para ler as próximas linhas
         free(line_2);
-    } while(isEof != EOF); // sai do loop quando chega no fim do arquivo
+    }
 
 }
 
 /**
- * fprintf feito no braço
+ * fscanf feito no braço para ler a partir da segunda linha
  * 
  * @param file - o arquivo a ser lido
  * @param sp - ponteiro que devolve a string lida
