@@ -9,9 +9,6 @@ void init (char * filename) {
 
     // arquivo a ser lido
     FILE * file = fopen(filename, "r");                                  
-    
-    // retorno da função para verificar erros
-    int r = -1;
 
     // inicializa o contador
     args_.count = 0;
@@ -19,14 +16,25 @@ void init (char * filename) {
     // chama a função de varredura do arquivo
     // passando um ponteiro para o arquivo e para o contador
     // apenas se o arquivo não está vazio
-    if (!feof(file)) r = read(file);
+    if (file) status = read(file);
+    else status = FOPENERR;
 
     fclose(file);
 
-    // analisa o retorno e imprime o contador na tela se um erro não foi encontrado
-         if (r == -1) printf("\n\tErro: Arquivo precisa ter 2 ou mais linhas\n\n");
-    else if (r == -2) printf("\n\tErro: Primeira linha não foi formatada corretamente\n\n");
-    else              printf("Resultado: %d", args_.count);
+    // analisa o retorno e imprime o contador na tela se um erro não foi encontrado             
+    switch(status) {
+        case FOPENERR:
+            printf("\n\tErro: Arquivo não existe\n\n");
+            break;
+        case INVFIRSTERR:
+            printf("\n\tErro: Primeira linha não foi formatada corretamente\n\n");
+            break;
+        case MUST2ERR:
+            printf("\n\tErro: Arquivo precisa ter 2 ou mais linhas\n\n");
+            break;
+        case ALLRIGHT:
+            printf("Resultado: %d", args_.count);
+    }
 
 }
 
@@ -39,27 +47,31 @@ int read (FILE * file) {
 
     // string a ser encontrada e
     // string a ser vasculhada respectivamente
-    unsigned char * line_1 = (unsigned char *) malloc(20), * line_2;
-
-    // flag de EOF
-    int isEof = 0;
-    
-    // lê a primeira string
-    fscanf(file, " %s\n", line_1);
+    unsigned char * line_1, * line_2;
 
     // parâmetros para os tamanhos das strings a ser passadas para as funções seguintes
     int len_line_1, len_line_2;
-    // tamanho da string a ser encontrada
-    len_line_1 = (int) strlen(line_1);
+
+    // flag de EOF
+    int isEof;
+    
+    // lê a primeira string
+    isEof = getNextLine(file, &line_1, &len_line_1);
+
+    printf("%d\n",len_line_1);
 
     // verifica se o arquivo já chegou no final, ou seja, se possui apenas uma linha
-    if (feof(file))
-        return -1;
+    if (isEof == EOF)
+        return MUST2ERR;
     
     // verifica se a primeira linha está formatada corretamente
     for (int i = 0; i < len_line_1; i++)
-        if (len_line_1 > 20 || (line_1[i] < '0' && line_1[i] > '9' && line_1[i] < 'A' && line_1[i] > 'z'))
-            return -2;
+        if (len_line_1 > 20)
+            return INVFIRSTERR; 
+        else if (line_1[i] < '0' || line_1[i] > '9')
+                if (line_1[i] < 'A' || line_1[i] > 'z')
+                    return INVFIRSTERR; 
+            
 
     do {
         // pega a próxima linha do arquivo e retorna se chegou ou não ao fim dele
@@ -70,7 +82,7 @@ int read (FILE * file) {
         free(line_2);
     } while(isEof != EOF); // sai do loop quando chegou no fim do arquivo
 
-    return 0;
+    return ALLRIGHT;
 }
 
 /**
