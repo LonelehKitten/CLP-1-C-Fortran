@@ -33,7 +33,7 @@ void init (char * filename) {
             printf("\n\tErro: Arquivo precisa ter 2 ou mais linhas\n\n");
             break;
         case ALLRIGHT:
-            printf("Resultado: %d", args_.count);
+            printf("\n\tResultado: %d\n\n", args_.count);
     }
 
 }
